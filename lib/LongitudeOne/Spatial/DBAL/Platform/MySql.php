@@ -18,7 +18,9 @@ declare(strict_types=1);
 
 namespace LongitudeOne\Spatial\DBAL\Platform;
 
+use LongitudeOne\Spatial\DBAL\Platform\MySql\AxisOrderOptions;
 use LongitudeOne\Spatial\DBAL\Types\AbstractSpatialType;
+use LongitudeOne\Spatial\DBAL\Types\GeographyType;
 use LongitudeOne\Spatial\Exception\MissingArgumentException;
 use LongitudeOne\Spatial\Exception\UnsupportedTypeException;
 use LongitudeOne\Spatial\PHP\Types\SpatialInterface;
@@ -32,6 +34,15 @@ use LongitudeOne\Spatial\PHP\Types\SpatialInterface;
  */
 class MySql extends AbstractPlatform
 {
+    public static ?AxisOrderOptions $axisOrderOption;
+
+    /**
+     * Optionally a SRID can be set to be used for Geographic types.
+     *
+     * A SRID is required to be able to persist Geographic / Spatial types to tables for which a specific SRIDs is set, by default MySQL uses 0 which would result in an error.
+     */
+    public static ?int $srid;
+
     /**
      * Convert binary data to a php value.
      *
@@ -57,7 +68,9 @@ class MySql extends AbstractPlatform
      */
     public function convertToDatabaseValueSql(AbstractSpatialType $type, $sqlExpr): string
     {
-        return sprintf('ST_GeomFromText(%s)', $sqlExpr);
+        return $type instanceof GeographyType && isset(self::$srid)
+            ? sprintf('ST_GeomFromText(%s, %d)', $sqlExpr, self::$srid)
+            : sprintf('ST_GeomFromText(%s)', $sqlExpr);
     }
 
     /**
@@ -68,7 +81,9 @@ class MySql extends AbstractPlatform
      */
     public function convertToPhpValueSql(AbstractSpatialType $type, $sqlExpr): string
     {
-        return sprintf('ST_AsBinary(%s)', $sqlExpr);
+        return $type instanceof GeographyType && isset(self::$axisOrderOption)
+            ? sprintf('ST_AsBinary(%s, "%s")', $sqlExpr, self::$axisOrderOption->value)
+            : sprintf('ST_AsBinary(%s)', $sqlExpr);
     }
 
     /**
