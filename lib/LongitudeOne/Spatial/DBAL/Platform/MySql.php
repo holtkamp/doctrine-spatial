@@ -68,7 +68,7 @@ class MySql extends AbstractPlatform
      */
     public function convertToDatabaseValueSql(AbstractSpatialType $type, $sqlExpr): string
     {
-        return $type instanceof GeographyType && isset(self::$srid)
+        return isset(self::$srid)
             ? sprintf('ST_GeomFromText(%s, %d)', $sqlExpr, self::$srid)
             : sprintf('ST_GeomFromText(%s)', $sqlExpr);
     }
@@ -81,7 +81,7 @@ class MySql extends AbstractPlatform
      */
     public function convertToPhpValueSql(AbstractSpatialType $type, $sqlExpr): string
     {
-        return $type instanceof GeographyType && isset(self::$axisOrderOption)
+        return isset(self::$axisOrderOption)
             ? sprintf('ST_AsBinary(%s, "%s")', $sqlExpr, self::$axisOrderOption->value)
             : sprintf('ST_AsBinary(%s)', $sqlExpr);
     }
