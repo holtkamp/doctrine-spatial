@@ -1,6 +1,21 @@
 parameters:
 	ignoreErrors:
 		-
+			message: "#^Parameter \\#1 \\$input of class LongitudeOne\\\\Geo\\\\WKB\\\\Parser constructor expects string\\|null, resource\\|string given\\.$#"
+			count: 1
+			path: ../../lib/LongitudeOne/Spatial/DBAL/Platform/AbstractPlatform.php
+
+		-
+			message: "#^Cannot access offset 0 on resource\\|string\\.$#"
+			count: 1
+			path: ../../lib/LongitudeOne/Spatial/DBAL/Types/AbstractSpatialType.php
+
+		-
+			message: "#^Parameter \\#2 \\$sqlExpr of method LongitudeOne\\\\Spatial\\\\DBAL\\\\Platform\\\\PlatformInterface\\:\\:convertStringToPhpValue\\(\\) expects string, resource\\|string given\\.$#"
+			count: 1
+			path: ../../lib/LongitudeOne/Spatial/DBAL/Types/AbstractSpatialType.php
+
+		-
 			message: "#^Call to function is_object\\(\\) with array\\<float\\|int\\> will always evaluate to false\\.$#"
 			count: 1
 			path: ../../lib/LongitudeOne/Spatial/PHP/Types/AbstractGeometry.php
@@ -36,11 +51,6 @@ parameters:
 			path: ../../tests/LongitudeOne/Spatial/Tests/ORM/Query/AST/Functions/PostgreSql/SpTransformTest.php
 
 		-
-			message: "#^Return type of call to method PHPUnit\\\\Framework\\\\MockObject\\\\MockBuilder\\<Doctrine\\\\DBAL\\\\Driver\\\\PDO\\\\SQLite\\\\Driver\\>\\:\\:getMock\\(\\) contains unresolvable type\\.$#"
-			count: 1
-			path: ../../tests/LongitudeOne/Spatial/Tests/OrmMockTestCase.php
-
-		-
 			message: "#^Parameter \\#1 \\$points of class LongitudeOne\\\\Spatial\\\\PHP\\\\Types\\\\Geometry\\\\LineString constructor expects array\\<array\\<float\\|int\\>\\|LongitudeOne\\\\Spatial\\\\PHP\\\\Types\\\\PointInterface\\>, array\\<int, int\\> given\\.$#"
 			count: 1
 			path: ../../tests/LongitudeOne/Spatial/Tests/PHP/Types/Geometry/LineStringTest.php
@@ -54,8 +64,3 @@ parameters:
 			message: "#^Parameter \\#1 \\$polygon of method LongitudeOne\\\\Spatial\\\\PHP\\\\Types\\\\AbstractMultiPolygon\\:\\:addPolygon\\(\\) expects array\\<array\\<array\\<float\\|int\\>\\|LongitudeOne\\\\Spatial\\\\PHP\\\\Types\\\\PointInterface\\>\\|LongitudeOne\\\\Spatial\\\\PHP\\\\Types\\\\LineStringInterface\\|LongitudeOne\\\\Spatial\\\\PHP\\\\Types\\\\MultiPointInterface\\>\\|LongitudeOne\\\\Spatial\\\\PHP\\\\Types\\\\PolygonInterface, string given\\.$#"
 			count: 1
 			path: ../../tests/LongitudeOne/Spatial/Tests/PHP/Types/Geometry/MultiPolygonTest.php
-
-		-
-			message: "#^Class Doctrine\\\\DBAL\\\\Platforms\\\\MySQL57Platform not found\\.$#"
-			count: 1
-			path: ../../tests/LongitudeOne/Spatial/Tests/SpatialTestCase.php
